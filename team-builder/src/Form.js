@@ -7,6 +7,7 @@ const Form = (props) => {
     role: "",
   });
   const setIsEditing = props.setIsEditing;
+  const isEditing = props.isEditing;
   const form = props.form;
   const setForm = props.setForm;
   const memberToEdit = props.memberToEdit;
@@ -32,18 +33,13 @@ const Form = (props) => {
     setMember({ name: "", email: "", role: "" });
   };
 
-  //   function editMember() {
-  //     // filter or map and find the member you are editing from members
-  //     // member = ...member
-  //     // edit the member
-  //     // put it back into the members array.
-  //     setIsEditing(true);
-  //     // setForm({
-  //     //   name: memberToEdit.name,
-  //     //   email: memberToEdit.email,
-  //     //   role: memberToEdit.role,
-  //     // });
-  //   }
+  function editMember() {
+    // filter or map and find the member you are editing from members
+    // member = ...member
+    // edit the member
+    // put it back into the members array.
+    setIsEditing(true);
+  }
 
   return (
     <div>
@@ -75,7 +71,9 @@ const Form = (props) => {
           onChange={handleChanges}
           value={member.role}
         />
-        <button type="submit">Add new member</button>
+        <button type="submit">
+          {!isEditing ? "Add new member" : "Edit member"}
+        </button>
       </form>
     </div>
   );
