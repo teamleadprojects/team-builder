@@ -1,9 +1,10 @@
 import React from "react";
 
 const Form = (props) => {
-  const isEditing = props.isEditing;
+  const setIsEditing = props.setIsEditing;
   const form = props.form;
   const setForm = props.setForm;
+
   const handleChanges = (event) => {
     setForm({
       ...form,
@@ -21,7 +22,12 @@ const Form = (props) => {
     // member = ...member
     // edit the member
     // put it back into the members array.
-    isEditing = false;
+    setIsEditing(true);
+    // setForm({
+    //   name: memberToEdit.name,
+    //   email: memberToEdit.email,
+    //   role: memberToEdit.role,
+    // });
   }
 
   return (
