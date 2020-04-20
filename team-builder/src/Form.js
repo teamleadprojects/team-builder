@@ -1,34 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const Form = (props) => {
+  const [member, setMember] = useState({
+    name: "",
+    email: "",
+    role: "",
+  });
   const setIsEditing = props.setIsEditing;
   const form = props.form;
   const setForm = props.setForm;
+  const memberToEdit = props.memberToEdit;
+
+  useEffect(() => {
+    setMember({
+      name: memberToEdit.name,
+      email: memberToEdit.email,
+      role: memberToEdit.role,
+    });
+  }, [memberToEdit]);
 
   const handleChanges = (event) => {
-    setForm({
-      ...form,
+    setMember({
+      ...member,
       [event.target.name]: event.target.value,
     });
     console.log(event.target.name);
   };
   const submitForm = (event) => {
     event.preventDefault();
-    props.addNewMember(form);
-    setForm({ name: "", email: "", role: "" });
+    props.addNewMember(member);
+    setMember({ name: "", email: "", role: "" });
   };
-  function editMember() {
-    // filter or map and find the member you are editing from members
-    // member = ...member
-    // edit the member
-    // put it back into the members array.
-    setIsEditing(true);
-    // setForm({
-    //   name: memberToEdit.name,
-    //   email: memberToEdit.email,
-    //   role: memberToEdit.role,
-    // });
-  }
+
+  //   function editMember() {
+  //     // filter or map and find the member you are editing from members
+  //     // member = ...member
+  //     // edit the member
+  //     // put it back into the members array.
+  //     setIsEditing(true);
+  //     // setForm({
+  //     //   name: memberToEdit.name,
+  //     //   email: memberToEdit.email,
+  //     //   role: memberToEdit.role,
+  //     // });
+  //   }
 
   return (
     <div>
@@ -40,7 +55,7 @@ const Form = (props) => {
           type="text"
           placeholder="Name"
           onChange={handleChanges}
-          value={form.name}
+          value={member.name}
         />
         <label>Email</label>
         <input
@@ -49,7 +64,7 @@ const Form = (props) => {
           type="text"
           placeholder="Email"
           onChange={handleChanges}
-          value={form.email}
+          value={member.email}
         />
         <label>Role</label>
         <input
@@ -58,7 +73,7 @@ const Form = (props) => {
           type="text"
           placeholder="Role"
           onChange={handleChanges}
-          value={form.role}
+          value={member.role}
         />
         <button type="submit">Add new member</button>
       </form>

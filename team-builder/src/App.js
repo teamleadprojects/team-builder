@@ -40,14 +40,7 @@ function App() {
   //Declare state property for memebers list
   const [members, setMembers] = useState(membersList);
   const [isEditing, setIsEditing] = useState(false);
-  // const [memberToEdit, setMemberToEdit] = useState({});
-
-  //set up state for form
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    role: "",
-  });
+  const [memberToEdit, setMemberToEdit] = useState({});
 
   //Add a new member to members list
   const addNewMember = (member) => {
@@ -58,20 +51,22 @@ function App() {
       role: member.role,
     };
     setMembers([...members, newMember]);
+    console.log("after new member", members);
   };
 
   //Edit member's list
-  const memberToEdit = (member) => {
-    // setMemberToEdit(member)
-    const editMember = {
-      id: Date.now(),
-      name: member.name,
-      email: member.email,
-      role: member.role,
-    };
-    setForm(editMember);
+  const memberToUpdate = (info) => {
+    setMemberToEdit(info);
+    // setMemberToEdit({
+    //   id: Date.now(),
+    //   name: info.name,
+    //   email: info.email,
+    //   role: info.role,
+    // });
+
     setIsEditing(true);
-    console.log(editMember);
+    console.log("member to edit new", memberToEdit);
+    console.log("what show member", info);
   };
 
   return (
@@ -80,13 +75,12 @@ function App() {
       <Form
         addNewMember={addNewMember}
         memberToEdit={memberToEdit}
-        form={form}
-        setForm={setForm}
+        setMemberToEdit={setMemberToEdit}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
         members={members}
       />
-      <Member members={members} memberToEdit={memberToEdit} />
+      <Member members={members} memberToUpdate={memberToUpdate} />
     </div>
   );
 }
