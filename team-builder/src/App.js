@@ -4,12 +4,6 @@ import Member from "./Member";
 import "./App.css";
 
 function App() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    role: "",
-  });
-
   //Add list of team members
   let membersList = [
     {
@@ -45,7 +39,15 @@ function App() {
   ];
   //Declare state property for memebers list
   const [members, setMembers] = useState(membersList);
-  const isEditing = false;
+  const [isEditing, setIsEditing] = useState(false);
+  // const [memberToEdit, setMemberToEdit] = useState({});
+
+  //set up state for form
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    role: "",
+  });
 
   //Add a new member to members list
   const addNewMember = (member) => {
@@ -57,8 +59,10 @@ function App() {
     };
     setMembers([...members, newMember]);
   };
+
   //Edit member's list
   const memberToEdit = (member) => {
+    // setMemberToEdit(member)
     const editMember = {
       id: Date.now(),
       name: member.name,
@@ -66,7 +70,7 @@ function App() {
       role: member.role,
     };
     setForm(editMember);
-    isEditing = true;
+    setIsEditing(true);
     console.log(editMember);
   };
 
@@ -79,6 +83,7 @@ function App() {
         form={form}
         setForm={setForm}
         isEditing={isEditing}
+        setIsEditing={setIsEditing}
         members={members}
       />
       <Member members={members} memberToEdit={memberToEdit} />
