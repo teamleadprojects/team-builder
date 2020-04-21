@@ -51,22 +51,12 @@ function App() {
       role: member.role,
     };
     setMembers([...members, newMember]);
-    console.log("after new member", members);
   };
 
   //Edit member's list
   const memberToUpdate = (info) => {
     setMemberToEdit(info);
-    // setMemberToEdit({
-    //   id: Date.now(),
-    //   name: info.name,
-    //   email: info.email,
-    //   role: info.role,
-    // });
-
     setIsEditing(true);
-    console.log("member to edit new", memberToEdit);
-    console.log("what show member", info);
   };
 
   return (
@@ -79,6 +69,7 @@ function App() {
         isEditing={isEditing}
         setIsEditing={setIsEditing}
         members={members}
+        setMembers={setMembers}
       />
       <Member members={members} memberToUpdate={memberToUpdate} />
     </div>
