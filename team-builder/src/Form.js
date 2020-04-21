@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 
-const Form = (props) => {
-  const [member, setMember] = useState({
+const Form = ({
+  memberToEdit,
+  setIsEditing,
+  isEditing,
+  addNewMember,
+  members,
+  setMembers,
+}) => {
+  const [member, setMember] = useState({});
+
+  useEffect(() => {
+    setMember(memberToEdit);
+  }, [memberToEdit]);
+
+  const initialMemberState = {
     name: "",
     email: "",
     role: "",
-  });
-  const setIsEditing = props.setIsEditing;
-  const isEditing = props.isEditing;
-  const form = props.form;
-  const setForm = props.setForm;
-  const memberToEdit = props.memberToEdit;
-
-  useEffect(() => {
-    setMember({
-      name: memberToEdit.name,
-      email: memberToEdit.email,
-      role: memberToEdit.role,
-    });
-  }, [memberToEdit]);
+  };
 
   const handleChanges = (event) => {
     setMember({
@@ -27,18 +27,32 @@ const Form = (props) => {
     });
     console.log(event.target.name);
   };
+
   const submitForm = (event) => {
     event.preventDefault();
-    props.addNewMember(member);
-    setMember({ name: "", email: "", role: "" });
+    if (isEditing) {
+      editMember(member);
+      setMember(initialMemberState);
+      setIsEditing(false);
+    } else {
+      addNewMember(member);
+    }
   };
-
-  function editMember() {
+  // the member we are currently editing.
+  function editMember(memberInfo) {
     // filter or map and find the member you are editing from members
     // member = ...member
     // edit the member
     // put it back into the members array.
-    setIsEditing(true);
+    const { id } = memberInfo;
+    const memberIndex = members.findIndex((x) => x.id === id);
+    const clonedMembers = [...members];
+    clonedMembers[memberIndex] = memberInfo;
+
+    setMembers(clonedMembers);
+    //setMembers();
+
+    console.log("member to edit", member);
   }
 
   return (
